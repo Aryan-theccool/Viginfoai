@@ -1,0 +1,28 @@
+# VigInfo AI — full stack (API + Postgres). Frontend served separately via Vite/Vercel.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: viginfo
+      POSTGRES_PASSWORD: viginfo
+      POSTGRES_DB: viginfo
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+
+  api:
+    build: ./backend
+    environment:
+      DATABASE_URL: postgresql+psycopg2://viginfo:viginfo@db:5432/viginfo
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o}
+      AUTO_SEED: "true"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

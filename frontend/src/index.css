@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-slate-100 text-slate-900 antialiased;
+}
+
+mark.vig-highlight {
+  @apply bg-amber-200 text-amber-950 rounded px-0.5 font-medium;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.35);
+}
+
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded;
+}
